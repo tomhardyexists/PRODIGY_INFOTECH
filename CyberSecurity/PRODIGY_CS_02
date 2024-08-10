@@ -1,0 +1,53 @@
+# python code performing simple image encryption using pixel manipulation (XOR)
+
+from PIL import Image
+
+def encrypt_img(img_path, key):
+    img = Image.open(img_path) #opens an image and returns an Image object
+    pixels = img.load() # loads image data into memory
+
+    width, height = img.size #returns a tuple that contains the width & height of the image in pixels
+
+    for x in range(width):
+        for y in range(height):
+            pixel_value = pixels[x, y]
+            encrypted_pixel_value = (pixel_value[0] ^ key, pixel_value[1] ^ key, pixel_value[2] ^ key) #performing bitwise XOR operations
+            pixels[x, y] = encrypted_pixel_value
+
+    return img
+
+def decrypt_img(encrypted_img, key):
+    pixels = encrypted_img.load()
+
+    width, height = encrypted_img.size
+
+    for x in range(width):
+        for y in range(height):
+            pixel_value = pixels[x, y]
+            decrypted_pixel_value = (pixel_value[0] ^ key, pixel_value[1] ^ key, pixel_value[2] ^ key)
+            pixels[x, y] = decrypted_pixel_value
+
+    return encrypted_img
+
+while True:
+
+    print("1.Encrypt a file")
+    print("2.Decrypt a file")
+    print("3.Exit")
+    operation = int(input("Choose operation:"))
+
+    if operation == 3:
+        exit(0)
+
+    img_path = input("Enter image path:")
+    path = input("Enter the path to save the processed file:")
+    img_name= input("Suggest a name for the image:")
+    key = int(input("Enter encryption key:"))
+
+    if operation == 1:
+        encrypted_img = encrypt_img(img_path, key)
+        encrypted_img.save(path+img_name)
+
+    elif operation == 2:
+        decrypted_img = decrypt_img(encrypted_img, key)
+        decrypted_img.save(path+img_name)
