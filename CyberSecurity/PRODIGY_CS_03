@@ -1,0 +1,44 @@
+# Python code to check the complexity of a password
+
+import re # re : regular expresions
+
+def Complexity(password):
+    hit = 0
+    if len(password) >= 8: # checking the length of the password
+        hit += 1
+    else:
+        print("-> Password is too short. Should have at least 8 characters.")
+
+    if re.search(r"[A-Z]", password): # checking for Uppercase Characters
+        hit += 1
+    else:
+        print("-> Password should have at least one uppercase character.")
+
+    if re.search(r"[a-z]", password): # checking for Lowercase Characters
+        hit += 1
+    else:
+        print("-> Password should have at least one lowercase character.")
+
+    if re.search(r"\d", password): # checking for digits
+        hit += 1
+    else:
+        print("-> Password should have atleat one numeric character")
+
+    if re.search(r"[!@#$%^&*()_+=:;{}<>,./|?~`]", password): # checking for special characters
+        hit += 1
+    else:
+        print("-> Password should have at least one special character.")
+
+    print("*"*30)
+    print("Overall report")
+    print("*"*30)
+
+    if hit >= 5:
+        print("Strong password!")
+    elif hit >= 3:
+        print("Password is good.")
+    else:
+        print("Weak password! Prone to attacks.")
+
+password = input("Enter your password:")
+Complexity(password)
