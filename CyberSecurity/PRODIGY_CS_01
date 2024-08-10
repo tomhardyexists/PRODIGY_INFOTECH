@@ -1,1 +1,46 @@
+#Python code to encrypt & decrypt a text using Caesar Cipher Algorithm.
+
+def encryption(txt, shift):
+    result=''
+    for char in txt:
+        if char.isalpha(): # returns true if all the characters are alphabets
+            ascii_value = 65 if char.isupper() else 97
+            result += chr((ord(char) - ascii_value + shift ) % 26 + ascii_value )
+
+        else:
+            result += char # other characters
+    return result
+
+def decryption(encrypt_txt, shift):
+        result = ''
+        for char in encrypt_txt:
+            if char.isalpha():
+                ascii_value = 65 if char.isupper() else 97
+                result += chr((ord(char) - ascii_value - shift) % 26 + ascii_value)
+            else:
+                result += char
+        return result
+
+
+while True:
+    print("Caesar Cipher")
+    print("*" * 60)
+    print("1.Encrypt a text")
+    print("2.Decrypt a text")
+    print("3.Exit")
+    choice = int(input("Enter your choice:"))
+    if choice == 1:
+        txt=input("Enter the text:") #enter the plain text
+        shift=int(input("Enter the shift value:")) #enter the key value
+        encrypt_data=encryption(txt, shift)
+        print("Encrypted text of {} is {}".format(txt, encrypt_data))
+    elif choice == 2:
+        encrypt_txt=input("Enter the encrypted text:")
+        shift=int(input("Enter the correct shift value to decrypt the data:"))
+        decrypt_data=decryption(encrypt_txt, shift)
+        print("Decrypted data of {} is {}".format(encrypt_txt, decrypt_data))
+    elif choice == 3:
+        exit(0)
+    else:
+        print("The option preferred doesn't exist.")
 
